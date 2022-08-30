@@ -1,3 +1,6 @@
+const { resolve } = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
+
 const setEnvironments = (configs, internal) => {
 	const { webpack } = internal.modules;
 	const { DefinePlugin } = webpack;
@@ -13,10 +16,28 @@ const setEnvironments = (configs, internal) => {
 	return configs;
 };
 
+const copyAssets = (configs) => {
+	configs.plugins.push(
+		new CopyPlugin({
+			patterns: [
+				{
+					from: resolve(process.cwd(), 'assets/'),
+					to: './',
+					filter: (uri) => {
+						return !(uri.endsWith('.ejs') || uri.endsWith('.sass'));
+					},
+				},
+			],
+		}),
+	);
+
+	return configs;
+};
+
 module.exports = {
 	useBabel: true,
 	buildId: () => 'marketplaceApp',
-	webpackMiddlewares: [setEnvironments],
+	webpackMiddlewares: [setEnvironments, copyAssets],
 	moduleAlias: {
 		global: {
 			'react-native': 'react-native-web',
