@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '@metacraft/ui';
+import ButtonFantasy from 'components/ButtonFantasy';
 
 export const BuildDashboard: FC = () => {
 	return (
 		<View style={styles.container}>
 			<Text>Hello</Text>
+			<ButtonFantasy textStyle={{ color: '#fff' }}>Login</ButtonFantasy>
 		</View>
 	);
 };
